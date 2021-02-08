@@ -16,7 +16,10 @@ class CookieController
     public function testCookie(): Response
     {
         $response = new Response();
-        $response->headers->setCookie(Cookie::create('foo', 'bar'));
+        $response->headers->setCookie(
+            Cookie::create('foo', 'bar')
+                ->withExpires((new \DateTimeImmutable())->modify('+1 year'))
+        );
         $content = "<html><body><h1>Why don't these cookies work?</h1></body></html>";
         $response->setContent($content);
         $response->headers->set('Content-Type', 'text/html');
